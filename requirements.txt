@@ -1,0 +1,2 @@
+﻿streamlit==1.66.1
+surrealdb==2.0.0
