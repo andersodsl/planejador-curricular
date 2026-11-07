@@ -16,7 +16,6 @@ def executar_teste(titulo, dados):
         print("Erro inesperado:", repr(erro))
 
 
-# Teste 1: nome vazio
 executar_teste(
     "TESTE 1 - Nome vazio",
     {
@@ -28,7 +27,6 @@ executar_teste(
     }
 )
 
-# Teste 2: código vazio
 executar_teste(
     "TESTE 2 - Código vazio",
     {
@@ -40,7 +38,6 @@ executar_teste(
     }
 )
 
-# Teste 3: período inválido
 executar_teste(
     "TESTE 3 - Período zero",
     {
@@ -52,7 +49,6 @@ executar_teste(
     }
 )
 
-# Teste 4: carga horária negativa
 executar_teste(
     "TESTE 4 - Carga horária negativa",
     {
@@ -64,7 +60,6 @@ executar_teste(
     }
 )
 
-# Teste 5: código duplicado
 executar_teste(
     "TESTE 5 - Código já cadastrado",
     {

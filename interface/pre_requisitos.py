@@ -9,6 +9,11 @@ from services.pre_requisitos import (
 
 
 def render(disciplinas):
+
+    if "mensagem_sucesso_pre" in st.session_state:
+        st.success(st.session_state["mensagem_sucesso_pre"])
+        del st.session_state["mensagem_sucesso_pre"]
+
     st.header("Gerenciamento de pré-requisitos")
 
     aba_adicionar, aba_consultar, aba_remover = st.tabs(
@@ -25,7 +30,6 @@ def render(disciplinas):
         for disciplina in disciplinas
     ]
 
-    # ADICIONAR
     with aba_adicionar:
         st.subheader("Adicionar relacionamento")
 
@@ -53,7 +57,9 @@ def render(disciplinas):
                         codigo_destino
                     )
 
-                    st.success("Pré-requisito adicionado com sucesso!")
+                    st.session_state["mensagem_sucesso_pre"] = (
+                        "Pré-requisito adicionado com sucesso!"
+                    )
                     st.rerun()
 
                 except Exception as erro:
@@ -63,7 +69,6 @@ def render(disciplinas):
                 "É necessário cadastrar pelo menos duas disciplinas."
             )
 
-    # CONSULTAR
     with aba_consultar:
         st.subheader("Consultar relacionamentos")
 
@@ -105,7 +110,6 @@ def render(disciplinas):
         else:
             st.info("Não existem disciplinas cadastradas.")
 
-    # REMOVER
     with aba_remover:
         st.subheader("Remover relacionamento")
 
@@ -156,7 +160,9 @@ def render(disciplinas):
                     )
 
                     if resultado:
-                        st.success("Relacionamento removido com sucesso!")
+                        st.session_state["mensagem_sucesso_pre"] = (
+                            "Relacionamento removido com sucesso!"
+                        )
                         st.rerun()
                     else:
                         st.warning("Relacionamento não encontrado.")

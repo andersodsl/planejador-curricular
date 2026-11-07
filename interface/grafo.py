@@ -4,7 +4,6 @@ from services.pre_requisitos import listar_pre_requisitos
 
 
 def escapar_texto(texto):
-    """Prepara textos para serem exibidos nos nós do grafo."""
     return (
         str(texto)
         .replace("\\", "\\\\")
@@ -24,14 +23,12 @@ def render(disciplinas):
     if not disciplinas:
         st.info("Cadastre disciplinas para visualizar o grafo.")
         return
-
-    # Relaciona o identificador de cada disciplina aos seus dados.
+    
     mapa_disciplinas = {
         str(disciplina["id"]): disciplina
         for disciplina in disciplinas
     }
 
-    # Início da estrutura do grafo.
     linhas = [
         "digraph G {",
         'rankdir="LR";',
@@ -40,7 +37,6 @@ def render(disciplinas):
         'edge [color="#555555", arrowsize="0.8"];'
     ]
 
-    # Adiciona todas as disciplinas como nós.
     for indice, disciplina in enumerate(disciplinas):
         identificador = f"disciplina_{indice}"
 
@@ -56,7 +52,6 @@ def render(disciplinas):
             f'{identificador} [label="{rotulo}"];'
         )
 
-    # Relaciona os identificadores do banco aos nós do grafo.
     identificadores_nos = {
         str(disciplina["id"]): f"disciplina_{indice}"
         for indice, disciplina in enumerate(disciplinas)
@@ -64,7 +59,6 @@ def render(disciplinas):
 
     total_relacionamentos = 0
 
-    # Busca os pré-requisitos de cada disciplina.
     for disciplina in disciplinas:
         relacionamentos = listar_pre_requisitos(
             disciplina["codigo"]
@@ -89,7 +83,6 @@ def render(disciplinas):
 
     linhas.append("}")
 
-    # Monta o código final do grafo.
     grafo = "\n".join(linhas)
 
     st.subheader("Grafo de disciplinas")

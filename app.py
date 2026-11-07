@@ -8,7 +8,6 @@ from interface.pre_requisitos import render as render_pre_requisitos
 from interface.grafo import render as render_grafo
 
 
-# CONFIGURAÇÃO
 st.set_page_config(
     page_title="Planejador de Grade Curricular",
     page_icon="📚",
@@ -16,7 +15,6 @@ st.set_page_config(
 )
 
 
-# CABEÇALHO
 st.title("📚 Planejador de Grade Curricular")
 
 st.caption(
@@ -25,8 +23,6 @@ st.caption(
 
 st.divider()
 
-
-# MENU
 pagina = st.sidebar.radio(
     "Navegação",
     [
@@ -37,8 +33,6 @@ pagina = st.sidebar.radio(
     ]
 )
 
-
-# CARREGAMENTO
 try:
     disciplinas = listar_disciplinas()
 
@@ -46,8 +40,6 @@ except Exception as erro:
     st.error(f"Erro ao carregar o banco de dados: {erro}")
     st.stop()
 
-
-# NAVEGAÇÃO
 if pagina == "Visão geral":
     render_visao_geral(disciplinas)
 

@@ -17,7 +17,6 @@ from services.pre_requisitos import (
 
 print("INICIANDO TESTES DE PRE-REQUISITOS")
 
-# Codigos exclusivos para evitar conflitos com outros testes.
 identificador = uuid.uuid4().hex[:8].upper()
 
 codigo_origem = f"TESTE{identificador}A"
@@ -27,7 +26,7 @@ origem_criada = False
 destino_criada = False
 
 try:
-    # Criacao das disciplinas temporarias.
+   
     cadastrar_disciplina(
         nome="Disciplina Origem Teste",
         codigo=codigo_origem,
@@ -125,7 +124,7 @@ except Exception as erro:
     raise
 
 finally:
-    # Limpeza dos dados temporarios.
+
     try:
         remover_pre_requisito(
             codigo_origem,

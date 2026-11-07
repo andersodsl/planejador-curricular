@@ -10,13 +10,19 @@ from services.disciplinas import (
 
 
 def render(disciplinas):
+
+    if "mensagem_sucesso" in st.session_state:
+        st.success(st.session_state["mensagem_sucesso"])
+        del st.session_state["mensagem_sucesso"]
+
     st.header("Gerenciamento de disciplinas")
 
     aba_cadastro, aba_consulta, aba_edicao, aba_exclusao = st.tabs(
-        ["Cadastrar", "Consultar", "Editar", "Excluir"]
+        ["Cadastrar", "Consultar", "Editar", "Excluir"],
+        key="disciplinas_tabs",
+        on_change="rerun"
     )
 
-    # CADASTRO
     with aba_cadastro:
         st.subheader("Cadastrar nova disciplina")
 
@@ -50,13 +56,14 @@ def render(disciplinas):
                         descricao=descricao
                     )
 
-                    st.success("Disciplina cadastrada com sucesso!")
+                    st.session_state["mensagem_sucesso"] = (
+                        "Disciplina cadastrada com sucesso!"
+                    )
                     st.rerun()
 
                 except Exception as erro:
                     st.error(str(erro))
 
-    # CONSULTA
     with aba_consulta:
         st.subheader("Consultar disciplinas")
 
@@ -79,7 +86,6 @@ def render(disciplinas):
         else:
             st.info("Nenhuma disciplina cadastrada.")
 
-    # EDIÇÃO
     with aba_edicao:
         st.subheader("Editar disciplina")
 
@@ -135,15 +141,15 @@ def render(disciplinas):
                                 descricao=nova_descricao
                             )
 
-                            st.success("Disciplina atualizada com sucesso!")
-                            st.rerun()
+                            st.success(
+                                "Disciplina atualizada com sucesso!"
+                            )
 
                         except Exception as erro:
                             st.error(str(erro))
         else:
             st.info("Cadastre uma disciplina antes de editar.")
 
-    # EXCLUSÃO
     with aba_exclusao:
         st.subheader("Excluir disciplina")
 
@@ -154,29 +160,19 @@ def render(disciplinas):
             ]
 
             codigo_exclusao = st.selectbox(
-                "Selecione a disciplina para excluir:",
+                "Selecione a disciplina",
                 codigos,
                 key="codigo_exclusao"
             )
 
-            st.warning(
-                "A exclusão remove o cadastro da disciplina. "
-                "Verifique seus relacionamentos antes de continuar."
-            )
-
-            confirmar = st.checkbox(
-                "Confirmo que desejo excluir esta disciplina."
-            )
-
-            if st.button(
-                "Excluir disciplina",
-                disabled=not confirmar
-            ):
+            if st.button("Excluir disciplina"):
                 try:
                     resultado = excluir_disciplina(codigo_exclusao)
 
                     if resultado:
-                        st.success("Disciplina excluída com sucesso!")
+                        st.session_state["mensagem_sucesso"] = (
+                            "Disciplina excluída com sucesso!"
+                        )
                         st.rerun()
                     else:
                         st.error("Disciplina não encontrada.")
@@ -184,4 +180,4 @@ def render(disciplinas):
                 except Exception as erro:
                     st.error(str(erro))
         else:
-            st.info("Não existem disciplinas para excluir.")
+            st.info("Nenhuma disciplina cadastrada.")

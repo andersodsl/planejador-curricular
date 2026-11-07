@@ -25,7 +25,7 @@ codigos_criados = []
 relacionamento_criado = False
 
 try:
-    # Criar tres disciplinas temporarias.
+
     for codigo, nome in [
         (codigo_origem, "Disciplina Origem Teste"),
         (codigo_destino, "Disciplina Destino Teste"),
@@ -112,7 +112,7 @@ except Exception as erro:
     raise
 
 finally:
-    # Garantir a limpeza dos registros temporarios.
+
     if relacionamento_criado:
         try:
             remover_pre_requisito(codigo_origem, codigo_destino)

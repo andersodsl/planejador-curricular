@@ -1,11 +1,6 @@
 
 from database.conexao import conectar
 
-
-# ==================================================
-# VALIDAÇÕES
-# ==================================================
-
 def validar_disciplina(
     nome,
     codigo,
@@ -40,11 +35,6 @@ def validar_disciplina(
 
     return True
 
-
-# ==================================================
-# CADASTRO
-# ==================================================
-
 def cadastrar_disciplina(
     nome,
     codigo,
@@ -62,7 +52,6 @@ def cadastrar_disciplina(
 
     codigo = codigo.strip()
 
-    # Verifica se o código já está cadastrado
     disciplina_existente = buscar_disciplina(codigo)
 
     if disciplina_existente is not None:
@@ -82,20 +71,11 @@ def cadastrar_disciplina(
         return resultado
 
 
-# ==================================================
-# LISTAGEM
-# ==================================================
-
 def listar_disciplinas():
     with conectar() as db:
         resultado = db.select("disciplina")
 
         return resultado
-
-
-# ==================================================
-# BUSCA POR CÓDIGO
-# ==================================================
 
 def buscar_disciplina(codigo):
     if not isinstance(codigo, str) or not codigo.strip():
@@ -113,11 +93,6 @@ def buscar_disciplina(codigo):
             return resultado[0]
 
         return None
-
-
-# ==================================================
-# ATUALIZAÇÃO
-# ==================================================
 
 def atualizar_disciplina(
     codigo,
@@ -181,12 +156,6 @@ def atualizar_disciplina(
 
         return resultado
 
-
-# ==================================================
-# EXCLUSÃO
-# ==================================================
-
-
 def excluir_disciplina(codigo):
     if not isinstance(codigo, str) or not codigo.strip():
         raise ValueError("Informe um código válido.")
@@ -197,7 +166,7 @@ def excluir_disciplina(codigo):
         return False
 
     with conectar() as db:
-        # Verifica se a disciplina possui relacionamentos no grafo.
+
         relacionamentos = db.query(
             """
             SELECT * FROM prerequisito

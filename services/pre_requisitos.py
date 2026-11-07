@@ -3,10 +3,6 @@ from database.conexao import conectar
 from services.disciplinas import buscar_disciplina
 
 
-# ==================================================
-# INICIALIZAÇÃO DA TABELA DE RELACIONAMENTO
-# ==================================================
-
 def inicializar_tabela_pre_requisitos():
     with conectar() as db:
         db.query("""
@@ -15,10 +11,6 @@ def inicializar_tabela_pre_requisitos():
             SCHEMALESS;
         """)
 
-
-# ==================================================
-# ADICIONAR PRÉ-REQUISITO
-# ==================================================
 
 def adicionar_pre_requisito(codigo_origem, codigo_destino):
 
@@ -69,10 +61,6 @@ def adicionar_pre_requisito(codigo_origem, codigo_destino):
         return resultado[0] if resultado else None
 
 
-# ==================================================
-# LISTAR PRÉ-REQUISITOS
-# ==================================================
-
 def listar_pre_requisitos(codigo):
 
     inicializar_tabela_pre_requisitos()
@@ -92,11 +80,6 @@ def listar_pre_requisitos(codigo):
                 "disciplina": disciplina["id"]
             }
         )
-
-
-# ==================================================
-# LISTAR DISCIPLINAS DEPENDENTES
-# ==================================================
 
 def listar_dependentes(codigo):
 
@@ -118,10 +101,6 @@ def listar_dependentes(codigo):
             }
         )
 
-
-# ==================================================
-# REMOVER PRÉ-REQUISITO
-# ==================================================
 
 def remover_pre_requisito(codigo_origem, codigo_destino):
 
