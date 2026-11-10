@@ -75,6 +75,14 @@ def listar_disciplinas():
     with conectar() as db:
         resultado = db.select("disciplina")
 
+        resultado = sorted(
+            resultado,
+            key=lambda disciplina: (
+                disciplina.get("periodo", 0),
+                disciplina.get("codigo", "")
+            )
+        )
+
         return resultado
 
 def buscar_disciplina(codigo):
